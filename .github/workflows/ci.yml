@@ -1,0 +1,21 @@
+name: CI
+on: push
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run TypeScript Compiler
+        run: pnpm tsc
+      - name: Run ESLint
+        run: pnpm eslint . --max-warnings 0

@@ -1,0 +1,37 @@
+{
+  "name": "dependabot-alert-bridge",
+  "version": "1.0.0",
+  "description": "Enable GitHub Actions workflow triggers for Dependabot alerts by bridging dependabot_alert webhooks to repository_dispatch events",
+  "keywords": [
+    "github-app",
+    "dependabot",
+    "repository-dispatch",
+    "github-actions",
+    "webhook"
+  ],
+  "license": "MIT",
+  "author": "Karl Horky",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch index.ts",
+    "start": "node index.ts",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "eslint": "9.39.2",
+    "eslint-config-upleveled": "9.4.7",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@octokit/auth-app": "^8.2.0",
+    "@octokit/request": "^10.0.7",
+    "@octokit/webhooks": "^14.2.0",
+    "@octokit/webhooks-types": "^7.6.1",
+    "arktype": "^2.1.29"
+  }
+}
