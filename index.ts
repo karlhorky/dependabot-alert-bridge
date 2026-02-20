@@ -167,26 +167,19 @@ createServer((requestMessage, response) => {
 
     const payload = Buffer.concat(chunks).toString('utf8');
 
-    try {
-      await webhooks.verifyAndReceive({
-        id: deliveryId,
-        name: eventName,
-        payload,
-        signature,
-      });
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message.includes('signature does not match')
-      ) {
-        console.warn('[webhook] Signature mismatch');
-        response.writeHead(401, { 'content-type': 'application/json' });
-        response.end(JSON.stringify({ error: 'invalid_signature' }));
-        return;
-      }
-
-      throw error;
+    if (!(await webhooks.verify(payload, signature))) {
+      console.warn('[webhook] Signature mismatch');
+      response.writeHead(401, { 'content-type': 'application/json' });
+      response.end(JSON.stringify({ error: 'invalid_signature' }));
+      return;
     }
+
+    await webhooks.verifyAndReceive({
+      id: deliveryId,
+      name: eventName,
+      payload,
+      signature,
+    });
 
     response.writeHead(202, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ accepted: true }));
