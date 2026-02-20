@@ -1,8 +1,9 @@
-import { createAppAuth } from '@octokit/auth-app';
-import { request } from '@octokit/request';
-import { Webhooks } from '@octokit/webhooks';
 import { createServer } from 'node:http';
 import { URL } from 'node:url';
+import { createAppAuth } from '@octokit/auth-app';
+import { request } from '@octokit/request';
+import type { EmitterWebhookEvent } from '@octokit/webhooks';
+import { Webhooks } from '@octokit/webhooks';
 import { config } from './config.js';
 
 type DispatchPayload = {
@@ -148,6 +149,14 @@ createServer((requestMessage, response) => {
       return;
     }
 
+    if (eventName !== 'dependabot_alert') {
+      response.writeHead(202, { 'content-type': 'application/json' });
+      response.end(
+        JSON.stringify({ skipped: 'unsupported_event', event: eventName }),
+      );
+      return;
+    }
+
     const chunks: Buffer[] = [];
     let totalBytes = 0;
 
@@ -174,11 +183,19 @@ createServer((requestMessage, response) => {
       return;
     }
 
-    await webhooks.verifyAndReceive({
+    let parsedPayload: EmitterWebhookEvent<'dependabot_alert'>['payload'];
+    try {
+      parsedPayload = JSON.parse(payload);
+    } catch {
+      response.writeHead(400, { 'content-type': 'application/json' });
+      response.end(JSON.stringify({ error: 'invalid_json' }));
+      return;
+    }
+
+    await webhooks.receive({
       id: deliveryId,
       name: eventName,
-      payload,
-      signature,
+      payload: parsedPayload,
     });
 
     response.writeHead(202, { 'content-type': 'application/json' });
@@ -189,5 +206,7 @@ createServer((requestMessage, response) => {
     response.end(JSON.stringify({ error: 'internal_error' }));
   });
 }).listen(config.port, () => {
-  console.info(`[startup] dependabot-alert-bridge listening on port ${config.port}`);
+  console.info(
+    `[startup] dependabot-alert-bridge listening on port ${config.port}`,
+  );
 });
