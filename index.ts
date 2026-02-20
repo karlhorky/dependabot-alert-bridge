@@ -149,9 +149,22 @@ createServer((requestMessage, response) => {
     }
 
     const chunks: Buffer[] = [];
+    let totalBytes = 0;
+
     for await (const chunk of requestMessage) {
-      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+      const chunkBuffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+      totalBytes += chunkBuffer.length;
+
+      if (totalBytes > 1024 * 1024) {
+        requestMessage.destroy();
+        response.writeHead(413, { 'content-type': 'application/json' });
+        response.end(JSON.stringify({ error: 'payload_too_large' }));
+        return;
+      }
+
+      chunks.push(chunkBuffer);
     }
+
     const payload = Buffer.concat(chunks).toString('utf8');
 
     try {
