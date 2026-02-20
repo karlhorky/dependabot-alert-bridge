@@ -1,0 +1,21 @@
+{
+  "name": "dependabot-alert-bridge",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "Karl Horky",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "25.2.3",
+    "eslint": "9.39.2",
+    "eslint-config-upleveled": "9.4.7",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
+}
