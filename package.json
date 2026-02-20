@@ -15,7 +15,6 @@
   "scripts": {
     "dev": "node --watch index.ts",
     "start": "node index.ts",
-    "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {

@@ -15,8 +15,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Build
-        run: pnpm build
       - name: Run TypeScript Compiler
         run: pnpm tsc
       - name: Run ESLint

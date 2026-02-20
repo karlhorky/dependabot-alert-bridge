@@ -121,7 +121,7 @@ After local testing, remember to set GitHub App Webhook URL back to your Deno De
 Checks:
 
 ```bash
-pnpm typecheck
+pnpm tsc
 pnpm lint
 ```
 
