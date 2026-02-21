@@ -163,46 +163,10 @@ pnpm lint
 
 ## Workflow Example
 
-`.github/workflows/dependabot-alert-remediation.yml`
-
 Bridge forwards all ecosystems. This example filters to npm in the workflow job.
 This workflow file must be on the repository default branch.
 
-```yaml
-name: Dependabot Alert Remediation
-
-on:
-  repository_dispatch:
-    types: [dependabot-alert-opened]
-
-jobs:
-  remediate:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.client_payload.ecosystem == 'npm' && github.event.client_payload.dependencies && github.event.client_payload.dependencies[0] }}
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      - run: pnpm up -r --depth 100 ${{ join(github.event.client_payload.dependencies, ' ') }}
-
-      - uses: peter-evans/create-pull-request@v8
-        with:
-          branch: dependabot-alert-${{ github.event.client_payload.alert_number }}
-          title: Remediate Dependabot alert #${{ github.event.client_payload.alert_number }}
-          body: Updated packages: ${{ join(github.event.client_payload.dependencies, ', ') }}
-          commit-message: Remediate Dependabot alert
-```
+- [`.github/workflows/dependabot-alert-remediation.yml`](.github/workflows/dependabot-alert-remediation.yml)
 
 ## Troubleshooting
 
