@@ -18,11 +18,12 @@
     "start": "node index.ts"
   },
   "dependencies": {
-    "@octokit/auth-app": "^8.2.0",
-    "@octokit/request": "^10.0.7",
-    "@octokit/webhooks": "^14.2.0",
-    "@octokit/webhooks-types": "^7.6.1",
-    "arktype": "^2.1.29"
+    "@octokit/auth-app": "8.2.0",
+    "@octokit/request": "10.0.7",
+    "@octokit/webhooks": "14.2.0",
+    "@octokit/webhooks-types": "7.6.1",
+    "arktype": "2.1.29",
+    "next": "15.0.0"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
