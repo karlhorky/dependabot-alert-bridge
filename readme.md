@@ -167,7 +167,7 @@ pnpm lint
 
 Bridge forwards all ecosystems. This example filters to npm in the workflow job and runs `pnpm up` for the affected dependencies:
 
-- [`.github/workflows/dependabot-alert-remediation.yml`](.github/workflows/dependabot-alert-remediation.yml)
+- [`.github/workflows/dependabot-alert-bridge-security-updates.yml`](.github/workflows/dependabot-alert-bridge-security-updates.yml)
 
 This workflow file must be on the repository default branch.
 
