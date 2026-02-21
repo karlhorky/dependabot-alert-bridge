@@ -44,16 +44,20 @@ See `.env.example`
    - Save this value, you will use it in GitHub App webhook settings, local `.env`, and deployed env vars
 2. Open [GitHub Apps settings](https://github.com/settings/apps) and click `New GitHub App`
 3. Fill required app fields:
-   - GitHub App name: `Dependabot Alert Bridge for GitHub Actions`
-   - Description: `Enable GitHub Actions workflow triggers for Dependabot alerts by bridging dependabot_alert webhooks to repository_dispatch events`
+   - GitHub App name: `Dependabot Alert Bridge`
+   - Description:
+     ```md
+     This app bridges `dependabot_alert` webhooks to `repository_dispatch` so GitHub Actions workflows can trigger.
+
+     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers, see [Bridge code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts)
+     ```
    - Homepage URL: `https://github.com/karlhorky/dependabot-alert-bridge`
 4. Configure webhook:
    - Webhook URL: temporary placeholder `https://example.com/webhook` (update after deploy)
    - Secret: paste the generated webhook secret
 5. Set repository permissions:
-   - `Dependabot alerts`: Read-only
    - `Contents`: Read and write
-   - `Metadata`: Read-only
+   - `Dependabot alerts`: Read-only
 6. Subscribe to event:
    - `Dependabot alert`
 7. Installation target:
@@ -78,9 +82,9 @@ Docs:
 5. Select your account and select the forked repository
 6. Set `Entrypoint` to `index.ts`
 7. Add environment variables in project settings:
-   - `GITHUB_WEBHOOK_SECRET`
    - `GITHUB_APP_ID`
    - `GITHUB_APP_PRIVATE_KEY`
+   - `GITHUB_WEBHOOK_SECRET`
    - optional: `PORT`
 8. Deploy
 9. Copy the Production Deployment `.deno.dev` URL and set GitHub App Webhook URL to:
