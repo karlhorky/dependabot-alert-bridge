@@ -9,7 +9,7 @@ GitHub sends `dependabot_alert` as a webhook event, but GitHub Actions cannot tr
 This bridge converts:
 
 - `dependabot_alert` webhook
-- to `repository_dispatch` with type `dependabot-alert-opened`
+- to `repository_dispatch` with type `dependabot-alert-bridge.dependabot-alert-opened`
 
 ## Flow
 
@@ -20,7 +20,7 @@ This bridge converts:
 5. Your workflow handles `repository_dispatch` and reads `github.event.client_payload`.
 
 ```text
-dependabot_alert webhook -> this bridge -> repository_dispatch (dependabot-alert-opened) -> your workflow
+dependabot_alert webhook -> this bridge -> repository_dispatch (dependabot-alert-bridge.dependabot-alert-opened) -> your workflow
 ```
 
 ## Environment Variables
@@ -107,7 +107,7 @@ Docs:
 ## Test
 
 1. Trigger a Dependabot alert in an installed repository
-2. Check bridge logs for `Dispatched dependabot-alert-opened`
+2. Check bridge logs for `Dispatched dependabot-alert-bridge.dependabot-alert-opened`
 3. Confirm the `repository_dispatch` workflow runs
 
 ## Run Locally
@@ -147,7 +147,7 @@ pnpm lint
 
 `event_type` is always:
 
-- `dependabot-alert-opened`
+- `dependabot-alert-bridge.dependabot-alert-opened`
 
 `client_payload` shape (example for an npm alert):
 

@@ -98,12 +98,12 @@ webhooks.on(
       headers: {
         authorization: `token ${installationAuth.token}`,
       },
-      event_type: 'dependabot-alert-opened',
+      event_type: 'dependabot-alert-bridge.dependabot-alert-opened',
       client_payload: dispatchPayload,
     });
 
     console.info(
-      `[webhook] Dispatched dependabot-alert-opened to ${event.payload.repository.full_name} with ${normalizedDependencies.length} dependencies`,
+      `[webhook] Dispatched dependabot-alert-bridge.dependabot-alert-opened to ${event.payload.repository.full_name} with ${normalizedDependencies.length} dependencies`,
     );
   },
 );
