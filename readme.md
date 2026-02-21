@@ -43,29 +43,38 @@ See `.env.example`
    - `openssl rand -hex 32`
    - Save this value, you will use it in GitHub App webhook settings, local `.env`, and deployed env vars
 2. Open [GitHub Apps settings](https://github.com/settings/apps) and click `New GitHub App`
-3. Fill required app fields:
+3. `Create GitHub App`
    - GitHub App name: `Dependabot Alert Bridge`
    - Description:
+
      ```md
      Enable GitHub Actions workflow triggers for Dependabot alerts by bridging `dependabot_alert` webhooks to `repository_dispatch` events.
 
-     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers, see [Bridge code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts)
+     Use cases: trigger remediation workflows from Dependabot alerts, run custom update commands such as `pnpm up -r --depth 100 ...`, and automate pull request creation for dependency updates.
+
+     ### Permissions
+
+     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers - feel free to audit [the app server code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts) for yourself.
      ```
+
    - Homepage URL: `https://github.com/karlhorky/dependabot-alert-bridge`
-4. Configure webhook:
-   - Webhook URL: temporary placeholder `https://example.com/webhook` (update after deploy)
+
+4. `Webhook`
+   - Webhook URL: temporary placeholder `https://example.com/webhook` (to be updated later, after deploy)
    - Secret: paste the generated webhook secret
-5. Set repository permissions:
+5. `Permissions`
    - `Contents`: Read and write
    - `Dependabot alerts`: Read-only
-6. Subscribe to event:
+6. `Subscribe to events`
    - `Dependabot alert`
-7. Installation target:
+7. `Where can this GitHub App be installed?`
    - `Only on this account`
-8. Create the app, generate a private key, install on target repositories
-9. Set bridge env vars (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
-10. Deploy the bridge service (see `Deploy on Deno Deploy`)
-11. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
+8. Create the app
+9. Generate a private key
+10. Install on target repositories
+11. Set bridge env vars (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
+12. Deploy the bridge service (see `Deploy on Deno Deploy`)
+13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
 
 Docs:
 
