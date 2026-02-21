@@ -38,7 +38,12 @@ webhooks.onAny((event) => {
 });
 
 webhooks.on(
-  ['dependabot_alert.created', 'dependabot_alert.reopened'],
+  [
+    'dependabot_alert.created',
+    'dependabot_alert.reopened',
+    'dependabot_alert.reintroduced',
+    'dependabot_alert.auto_reopened',
+  ],
   async (event) => {
     const directPackage = event.payload.alert.dependency.package;
 
