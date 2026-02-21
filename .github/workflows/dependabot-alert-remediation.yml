@@ -28,6 +28,7 @@ jobs:
 
       - uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ secrets.DEPENDABOT_ALERT_BRIDGE_PR_TOKEN }}
           branch: dependabot-alert-${{ github.event.client_payload.alert_number }}
           title: "Update ${{ join(github.event.client_payload.dependencies, ', ') }} [SECURITY]"
           body: |

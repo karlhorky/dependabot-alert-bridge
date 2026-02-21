@@ -73,7 +73,9 @@ See `.env.example`
 9. Generate a private key
    - In `Private keys`, click `Generate a private key` and use the downloaded `.pem` file contents as `GITHUB_APP_PRIVATE_KEY`
 10. Install on target repositories
-   - In GitHub App settings, open `Install App`, click `Install` on each target repository/account
+
+- In GitHub App settings, open `Install App`, click `Install` on each target repository/account
+
 11. Collect these values for deployment (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
 12. Deploy the bridge service (see `Deploy on Deno Deploy`)
 13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
@@ -163,10 +165,19 @@ pnpm lint
 
 ## Workflow Example
 
-Bridge forwards all ecosystems. This example filters to npm in the workflow job.
-This workflow file must be on the repository default branch.
+Bridge forwards all ecosystems. This example filters to npm in the workflow job and runs `pnpm up` for the affected dependencies:
 
 - [`.github/workflows/dependabot-alert-remediation.yml`](.github/workflows/dependabot-alert-remediation.yml)
+
+This workflow file must be on the repository default branch.
+
+Create a fine-grained PAT for PR creation:
+
+1. Go to GitHub `Settings` -> `Developer settings` -> `Personal access tokens` -> `Fine-grained tokens` -> `Generate new token`, set token name to `dependabot-alert-bridge-pr-token`
+2. Select the target repository, set repository permissions to `Contents: Read and write` and `Pull requests: Read and write`
+3. In the target repository, go to `Settings` -> `Secrets and variables` -> `Actions`, then add secret `DEPENDABOT_ALERT_BRIDGE_PR_TOKEN` with the token value
+
+This token is used by `peter-evans/create-pull-request` so CI checks run on bridge-created PRs
 
 ## Troubleshooting
 
