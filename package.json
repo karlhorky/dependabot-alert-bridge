@@ -22,13 +22,10 @@
     "@octokit/request": "10.0.7",
     "@octokit/webhooks": "14.2.0",
     "@octokit/webhooks-types": "7.6.1",
-    "arktype": "2.1.29",
-    "next": "15.0.0",
-    "react": "19.0.0"
+    "arktype": "2.1.29"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
-    "eslint": "9.39.2",
     "eslint-config-upleveled": "9.4.7",
     "prettier": "3.8.1",
     "typescript": "5.9.3"
