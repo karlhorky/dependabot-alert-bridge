@@ -71,8 +71,10 @@ See `.env.example`
    - `Only on this account`
 8. Create the app
 9. Generate a private key
+   - In `Private keys`, click `Generate a private key` and use the downloaded `.pem` file contents as `GITHUB_APP_PRIVATE_KEY`
 10. Install on target repositories
-11. Set bridge env vars (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
+   - In GitHub App settings, open `Install App`, click `Install` on each target repository/account
+11. Collect these values for deployment (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
 12. Deploy the bridge service (see `Deploy on Deno Deploy`)
 13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
 
@@ -92,7 +94,10 @@ Docs:
 6. Set `Entrypoint` to `index.ts`
 7. Add environment variables in project settings:
    - `GITHUB_APP_ID`
-   - `GITHUB_APP_PRIVATE_KEY`
+   - `GITHUB_APP_PRIVATE_KEY` (single line with `\n` escapes)
+     ```bash
+     cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
+     ```
    - `GITHUB_WEBHOOK_SECRET`
    - optional: `PORT`
 8. Deploy
