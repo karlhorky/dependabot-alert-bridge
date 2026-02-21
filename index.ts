@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import { URL } from 'node:url';
+import { Buffer } from 'node:buffer';
 import { createAppAuth } from '@octokit/auth-app';
 import { request } from '@octokit/request';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
