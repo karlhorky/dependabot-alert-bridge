@@ -47,7 +47,7 @@ See `.env.example`
    - GitHub App name: `Dependabot Alert Bridge`
    - Description:
      ```md
-     This app bridges `dependabot_alert` webhooks to `repository_dispatch` so GitHub Actions workflows can trigger.
+     Enable GitHub Actions workflow triggers for Dependabot alerts by bridging `dependabot_alert` webhooks to `repository_dispatch` events.
 
      `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers, see [Bridge code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts)
      ```
