@@ -4,7 +4,7 @@ import { createAppAuth } from '@octokit/auth-app';
 import { request } from '@octokit/request';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import { Webhooks } from '@octokit/webhooks';
-import { config } from './config.js';
+import { config } from './config.ts';
 
 type DispatchPayload = {
   alert_number?: number;
