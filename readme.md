@@ -175,9 +175,9 @@ Create a fine-grained PAT for PR creation:
 
 1. Go to GitHub `Settings` -> `Developer settings` -> `Personal access tokens` -> `Fine-grained tokens` -> `Generate new token`, set token name to `dependabot-alert-bridge-pr-token`
 2. Select the target repository, set repository permissions to `Contents: Read and write` and `Pull requests: Read and write`
-3. In the target repository, go to `Settings` -> `Secrets and variables` -> `Actions`, then add secret `DEPENDABOT_ALERT_BRIDGE_PR_TOKEN` with the token value
+3. In the target repository, go to `Settings` -> `Secrets and variables` -> `Actions`, create a new repository secret named `DEPENDABOT_ALERT_BRIDGE_PR_TOKEN`, and paste the token value
 
-This token is used by `peter-evans/create-pull-request` so CI checks run on bridge-created PRs
+This workflow uses `peter-evans/create-pull-request` with that token and adds `security` / `dependencies` labels for easier tracking
 
 ## Troubleshooting
 
