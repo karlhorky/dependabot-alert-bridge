@@ -30,6 +30,6 @@ jobs:
       - uses: peter-evans/create-pull-request@v8
         with:
           branch: dependabot-alert-${{ github.event.client_payload.alert_number }}
-          title: Remediate Dependabot alert #${{ github.event.client_payload.alert_number }}
-          body: Updated packages: ${{ join(github.event.client_payload.dependencies, ', ') }}
+          title: "Remediate Dependabot alert #${{ github.event.client_payload.alert_number }}"
+          body: "Updated packages: ${{ join(github.event.client_payload.dependencies, ', ') }}"
           commit-message: Remediate Dependabot alert
