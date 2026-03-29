@@ -89,22 +89,21 @@ Docs:
 ## Deploy on Deno Deploy
 
 1. Fork this repository to your GitHub account
-2. Go to [Deno Deploy - Create a New Project](https://dash.deno.com/new_project)
-3. Click `Continue with GitHub`, authorize Deno Deploy, accept terms
-4. If your account does not appear, click `Add GitHub Account` and authorize it
+2. Go to [Deno Deploy - New App](https://console.deno.com/new)
+3. Click `Sign in with GitHub`, authorize Deno Deploy, accept terms
+4. If your account does not appear in the `Select user or organization` dropdown, click `Add GitHub Account` and authorize it
 5. Select your account and select the forked repository
-6. Set `Entrypoint` to `index.ts`
-7. Add environment variables in project settings:
-   - `GITHUB_APP_ID`
-   - `GITHUB_APP_PRIVATE_KEY` (single line with `\n` escapes)
+6. Click `Add Environment variables` and click `Add variable` to add the following environment variables:
+   - `GITHUB_APP_ID`: value that you copied during GitHub App setup
+   - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
      ```bash
      cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
      ```
-   - `GITHUB_WEBHOOK_SECRET`
+   - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
    - optional: `PORT`
-8. Deploy
-9. Copy the Production Deployment `.deno.dev` URL and set GitHub App Webhook URL to:
-   - `https://<your-project>.deno.dev/webhook`
+7. Click `Create App`
+8. Copy the Production URL (ends in `.deno.net`) at the top right of the page and set GitHub App Webhook URL to:
+   - `https://<your-project>.deno.net/webhook`
 
 ## Test
 
