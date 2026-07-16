@@ -22,13 +22,13 @@
     "@octokit/request": "10.0.11",
     "@octokit/webhooks": "14.2.0",
     "@octokit/webhooks-types": "7.6.1",
-    "arktype": "2.2.2"
+    "arktype": "2.2.3"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
     "eslint": "9.39.2",
     "eslint-config-upleveled": "9.4.7",
-    "prettier": "3.9.4",
+    "prettier": "3.9.5",
     "typescript": "5.9.3"
   },
   "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8",
