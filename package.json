@@ -28,7 +28,7 @@
     "@types/node": "24.10.1",
     "eslint": "9.39.2",
     "eslint-config-upleveled": "9.4.7",
-    "prettier": "3.9.6",
+    "prettier": "3.9.9",
     "typescript": "5.9.3"
   },
   "devEngines": {
