@@ -88,8 +88,6 @@ Docs:
 
 ## Deploy on Vercel
 
-Vercel detects the root `server.ts` file as a Node.js server entry point.
-
 1. Fork this repository to your GitHub account
 2. Sign up on [Vercel](https://vercel.com/signup) using `Continue with GitHub`
 3. Click `Add New...` (top right) and select `Project`
