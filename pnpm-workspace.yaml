@@ -13,3 +13,6 @@ minimumReleaseAgeExclude:
   - '@upleveled/*'
   - eslint-config-upleveled
   - stylelint-config-upleveled
+
+overrides:
+  '@babel/core': 7.29.0
