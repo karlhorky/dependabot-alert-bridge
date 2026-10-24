@@ -92,12 +92,12 @@ Docs:
 2. Go to [Render - Create an account](https://dashboard.render.com/register), click `GitHub` and click `Authorize`
 3. Confirm the prefilled email address in `Email` and click `Create Account`
 4. Open the email titled `Activate your Render account` and click `Verify your email`
-5. Click `Skip Survey` on `Create a new workspace`
+5. On the `Create a new workspace` page, click `Skip Survey` at the bottom
 6. Click `New Web Service` under `Web Services`
 7. Under `Git Provider`, click `GitHub`, select your account in the popup, choose `Only select repositories`, select the forked repository and click `Install`
 8. Select the forked repository `dependabot-alert-bridge`
 9. Select `Frankfurt (EU Central)` as the region
-10. Under `Compute`, select a paid compute plan for regular use. For testing, select the `$0 / month` option marked `Free`
+10. Under `Compute`, select the `$0 / month` option marked `Free`
 11. Under `Environment Variables`, enter each variable name in `Key` and its value in `Value`, clicking `Add Environment Variable` for each additional variable:
     - `GITHUB_APP_ID`: value that you copied during GitHub App setup
     - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
@@ -110,7 +110,7 @@ Docs:
     - `https://<your-service>.onrender.com/webhook`
 14. Open `https://<your-service>.onrender.com/health` in your browser and confirm the response is `{"status":"ok"}`
 
-Free services stop after 15 minutes without requests and take about one minute to restart. GitHub marks webhook deliveries as failed when the server takes longer than 10 seconds to respond and does not automatically retry failed deliveries. Use paid compute to avoid idle shutdown during regular use. For failed deliveries during testing, open the GitHub App settings, select `Advanced` → `Recent Deliveries`, select the failed delivery and click `Redeliver` after the service has started.
+Free services stop after 15 minutes without requests and take about one minute to restart. GitHub marks webhook deliveries as failed when the server takes longer than 10 seconds to respond and does not automatically retry failed deliveries. For failed deliveries, open the GitHub App settings, select `Advanced` → `Recent Deliveries`, select the failed delivery and click `Redeliver` after the service has started.
 
 - [Render free-service limits](https://render.com/docs/free)
 - [Handling failed webhook deliveries](https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries)
