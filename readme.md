@@ -90,7 +90,7 @@ Docs:
 
 1. Fork this repository to your GitHub account
 2. Go to [Render - Create an account](https://dashboard.render.com/register), click `GitHub` and click `Authorize`
-3. Enter your email address in `Email` and click `Create Account`
+3. Confirm the prefilled email address in `Email` and click `Create Account`
 4. Open the email titled `Activate your Render account` and click `Verify your email`
 5. Click `Skip Survey` on `Create a new workspace`
 6. Click `New Web Service` under `Web Services`
