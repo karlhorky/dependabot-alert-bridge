@@ -101,11 +101,10 @@ Docs:
      ```
    - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
 7. Click `Deploy`
-8. Click `Go to Project` (bottom), the `Settings` tab (left), `Functions` (left), deselect the existing region, select `London, United Kingdom` as the region, click `Save` and click `Redeploy` (bottom right)
-9. Click the `Deployments` tab (left) and check that the first deploy in the list contains your last commit message on GitHub
-10. Copy the production URL under `Domains` and set GitHub App Webhook URL to:
-    - `https://<your-project>.vercel.app/webhook`
-11. Open `https://<your-project>.vercel.app/health` in your browser and confirm the response is `{"status":"ok"}`
+8. Click `Go to Project` (bottom), the `Deployments` tab (left) and check that the first deploy in the list contains your last commit message on GitHub
+9. Copy the production URL under `Domains` and set GitHub App Webhook URL to:
+   - `https://<your-project>.vercel.app/webhook`
+10. Open `https://<your-project>.vercel.app/health` in your browser and confirm the response is `{"status":"ok"}`
 
 ## Test
 
