@@ -77,7 +77,7 @@ See `.env.example`
 - In GitHub App settings, open `Install App`, click `Install` on each target repository/account
 
 11. Collect these values for deployment (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
-12. Deploy the bridge service (see `Deploy on Deno Deploy`)
+12. Deploy the bridge service (see `Deploy on Render`)
 13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
 
 Docs:
@@ -86,24 +86,34 @@ Docs:
 - [Choosing permissions for a GitHub App](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/choosing-permissions-for-a-github-app)
 - [Using webhooks with GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/using-webhooks-with-github-apps)
 
-## Deploy on Deno Deploy
+## Deploy on Render
 
-1. Fork this repository to your GitHub account
-2. Go to [Deno Deploy - New App](https://console.deno.com/new)
-3. Click `Sign in with GitHub`, authorize Deno Deploy, accept terms
-4. If your account does not appear in the `Select user or organization` dropdown, click `Add GitHub Account` and authorize it
-5. Select your account and select the forked repository
-6. Click `Add Environment variables` and click `Add variable` to add the following environment variables:
-   - `GITHUB_APP_ID`: value that you copied during GitHub App setup
-   - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
-     ```bash
-     cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
-     ```
-   - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
-   - optional: `PORT`
-7. Click `Create App`
-8. Copy the Production URL (ends in `.deno.net`) at the top right of the page and set GitHub App Webhook URL to:
-   - `https://<your-project>.deno.net/webhook`
+1. Click "Fork" at the top right of this GitHub repository page, select your GitHub account and click "Create fork" to create a copy of the GitHub repository in your account
+2. On [Render - Create an account](https://dashboard.render.com/register), click "GitHub", sign in to GitHub if necessary and click "Authorize"
+3. In "Email", enter the email address you want to use for Render and click "Create Account"
+4. Open the email titled "Activate your Render account" and click "Verify your email"
+5. On the "Create a new workspace" page, click "Skip Survey" below the "Next" button
+6. Click "New Web Service" under "Web Services"
+7. Under "Git Provider", click "GitHub". A new window will open, where you will be prompted to install the Render GitHub app. Select your GitHub account. Choose the **Only select repositories** option and select only the repository that you want to deploy. Click **Install**
+8. Back on Render, click your forked repository `dependabot-alert-bridge`
+9. Select **Frankfurt (EU Central)** as the region
+10. Under "Compute", select a paid compute plan for regular use. For testing, select the "$0 / month" option marked "Free"
+11. Under "Environment Variables", enter each variable name in "Key" and its value in "Value", clicking "Add Environment Variable" for each additional variable:
+    - `GITHUB_APP_ID`: value that you copied during GitHub App setup
+    - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
+      ```bash
+      cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
+      ```
+    - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
+12. Click "Deploy web service" and wait until the status shows "Deploy succeeded | Live"
+13. Copy the `https://…onrender.com` URL from the deployment logs under "Available at your primary URL" and set the GitHub App Webhook URL to:
+    - `https://<your-service>.onrender.com/webhook`
+14. Open `https://<your-service>.onrender.com/health` in your browser and confirm the response is `{"status":"ok"}`
+
+Free services stop after 15 minutes without requests and take about one minute to restart. GitHub marks webhook deliveries as failed when the server takes longer than 10 seconds to respond and does not automatically retry failed deliveries. Use paid compute to avoid idle shutdown during regular use. For failed deliveries during testing, open the GitHub App settings, select "Advanced" → "Recent Deliveries", select the failed delivery and click "Redeliver" after the service has started.
+
+- [Render free-service limits](https://render.com/docs/free)
+- [Handling failed webhook deliveries](https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries)
 
 ## Test
 
@@ -135,7 +145,7 @@ Then set the GitHub App Webhook URL to:
 https://<your-cloudflared-subdomain>/webhook
 ```
 
-After local testing, remember to set GitHub App Webhook URL back to your Deno Deploy `/webhook` URL.
+After local testing, remember to set GitHub App Webhook URL back to your Render `/webhook` URL.
 
 Checks:
 
