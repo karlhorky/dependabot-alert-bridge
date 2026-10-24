@@ -54,7 +54,7 @@ See `.env.example`
 
      ### Permissions
 
-     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers - feel free to audit [the app server code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts) for yourself.
+     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers - feel free to audit [the app server code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/server.ts) for yourself.
      ```
 
    - Homepage URL: `https://github.com/karlhorky/dependabot-alert-bridge`
@@ -77,7 +77,7 @@ See `.env.example`
 - In GitHub App settings, open `Install App`, click `Install` on each target repository/account
 
 11. Collect these values for deployment (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
-12. Deploy the bridge service (see `Deploy on Render`)
+12. Deploy the bridge service (see `Deploy on Vercel`)
 13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
 
 Docs:
@@ -86,34 +86,28 @@ Docs:
 - [Choosing permissions for a GitHub App](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/choosing-permissions-for-a-github-app)
 - [Using webhooks with GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/using-webhooks-with-github-apps)
 
-## Deploy on Render
+## Deploy on Vercel
+
+Vercel detects the root `server.ts` file as a Node.js server entry point.
 
 1. Fork this repository to your GitHub account
-2. Go to [Render - Create an account](https://dashboard.render.com/register), click `GitHub` and click `Authorize`
-3. Confirm the prefilled email address in `Email` and click `Create Account`
-4. Open the email titled `Activate your Render account` and click `Verify your email`
-5. On the `Create a new workspace` page, click `Skip Survey` at the bottom
-6. Click `New Web Service` under `Web Services`
-7. Under `Git Provider`, click `GitHub`, select your account in the popup, choose `Only select repositories`, select the forked repository and click `Install`
-8. Select the forked repository `dependabot-alert-bridge`
-9. Select `Frankfurt (EU Central)` as the region
-10. Under `Compute`, select the `$0 / month` option marked `Free`
-11. Under `Environment Variables`, enter each variable name in `Key` and its value in `Value`, clicking `Add Environment Variable` for each additional variable:
-    - `GITHUB_APP_ID`: value that you copied during GitHub App setup
-    - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
-      ```bash
-      cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
-      ```
-    - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
-12. Click `Deploy web service` and wait until the status shows `Deploy succeeded | Live`
-13. Copy the `https://…onrender.com` URL from the deployment logs under `Available at your primary URL` and set the GitHub App Webhook URL to:
-    - `https://<your-service>.onrender.com/webhook`
-14. Open `https://<your-service>.onrender.com/health` in your browser and confirm the response is `{"status":"ok"}`
-
-Free services stop after 15 minutes without requests and take about one minute to restart. GitHub marks webhook deliveries as failed when the server takes longer than 10 seconds to respond and does not automatically retry failed deliveries. For failed deliveries, open the GitHub App settings, select `Advanced` → `Recent Deliveries`, select the failed delivery and click `Redeliver` after the service has started.
-
-- [Render free-service limits](https://render.com/docs/free)
-- [Handling failed webhook deliveries](https://docs.github.com/en/webhooks/using-webhooks/handling-failed-webhook-deliveries)
+2. Sign up on [Vercel](https://vercel.com/signup) using `Continue with GitHub`
+3. Click `Add New...` (top right) and select `Project`
+4. Click `Continue with GitHub`, choose `Only select repositories` in the popup window and select the repo you want to deploy
+5. Click `Import` next to the forked repository `dependabot-alert-bridge`
+6. Add the following variables in `Environment Variables`:
+   - `GITHUB_APP_ID`: value that you copied during GitHub App setup
+   - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
+     ```bash
+     cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
+     ```
+   - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
+7. Click `Deploy`
+8. Click `Go to Project` (bottom), the `Settings` tab (left), `Functions` (left), deselect the existing region, select `London, United Kingdom` as the region, click `Save` and click `Redeploy` (bottom right)
+9. Click the `Deployments` tab (left) and check that the first deploy in the list contains your last commit message on GitHub
+10. Copy the production URL under `Domains` and set GitHub App Webhook URL to:
+    - `https://<your-project>.vercel.app/webhook`
+11. Open `https://<your-project>.vercel.app/health` in your browser and confirm the response is `{"status":"ok"}`
 
 ## Test
 
@@ -130,7 +124,7 @@ Requirements:
 
 ```bash
 pnpm install
-node --env-file=.env index.ts
+node --env-file=.env server.ts
 ```
 
 Expose local webhook endpoint:
@@ -145,7 +139,7 @@ Then set the GitHub App Webhook URL to:
 https://<your-cloudflared-subdomain>/webhook
 ```
 
-After local testing, remember to set GitHub App Webhook URL back to your Render `/webhook` URL.
+After local testing, remember to set GitHub App Webhook URL back to your Vercel `/webhook` URL.
 
 Checks:
 
