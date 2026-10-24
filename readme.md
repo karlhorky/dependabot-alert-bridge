@@ -90,7 +90,7 @@ Docs:
 
 1. Fork this repository to your GitHub account
 2. Sign up on [Vercel](https://vercel.com/signup) using `Continue with GitHub`
-3. Click `Add New...` (top right) and select `Project`
+3. Click `Add New` (top right) and select `Project`
 4. Click `Continue with GitHub`, choose `Only select repositories` in the popup window and select the repo you want to deploy
 5. Click `Import` next to the forked repository `dependabot-alert-bridge`
 6. Add the following variables in `Environment Variables`:
