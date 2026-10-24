@@ -99,15 +99,15 @@ Docs:
 9. Select `Frankfurt (EU Central)` as the region
 10. Under `Compute`, select a paid compute plan for regular use. For testing, select the `$0 / month` option marked `Free`
 11. Under `Environment Variables`, enter each variable name in `Key` and its value in `Value`, clicking `Add Environment Variable` for each additional variable:
-   - `GITHUB_APP_ID`: value that you copied during GitHub App setup
-   - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
-     ```bash
-     cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
-     ```
-   - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
+    - `GITHUB_APP_ID`: value that you copied during GitHub App setup
+    - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
+      ```bash
+      cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
+      ```
+    - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
 12. Click `Deploy web service` and wait until the status shows `Deploy succeeded | Live`
 13. Copy the `https://…onrender.com` URL from the deployment logs under `Available at your primary URL` and set the GitHub App Webhook URL to:
-   - `https://<your-service>.onrender.com/webhook`
+    - `https://<your-service>.onrender.com/webhook`
 14. Open `https://<your-service>.onrender.com/health` in your browser and confirm the response is `{"status":"ok"}`
 
 Free services stop after 15 minutes without requests and take about one minute to restart. GitHub marks webhook deliveries as failed when the server takes longer than 10 seconds to respond and does not automatically retry failed deliveries. Use paid compute to avoid idle shutdown during regular use. For failed deliveries during testing, open the GitHub App settings, select `Advanced` → `Recent Deliveries`, select the failed delivery and click `Redeliver` after the service has started.
