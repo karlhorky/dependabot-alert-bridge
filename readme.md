@@ -54,7 +54,7 @@ See `.env.example`
 
      ### Permissions
 
-     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers - feel free to audit [the app server code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/index.ts) for yourself.
+     `Contents: Read and write` is only used to send `repository_dispatch` events for GitHub Actions workflow triggers - feel free to audit [the app server code](https://github.com/karlhorky/dependabot-alert-bridge/blob/main/server.ts) for yourself.
      ```
 
    - Homepage URL: `https://github.com/karlhorky/dependabot-alert-bridge`
@@ -77,7 +77,7 @@ See `.env.example`
 - In GitHub App settings, open `Install App`, click `Install` on each target repository/account
 
 11. Collect these values for deployment (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`)
-12. Deploy the bridge service (see `Deploy on Deno Deploy`)
+12. Deploy the bridge service (see `Deploy on Vercel`)
 13. Update Webhook URL in GitHub App settings to your deployed URL plus `/webhook`
 
 Docs:
@@ -86,24 +86,25 @@ Docs:
 - [Choosing permissions for a GitHub App](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/choosing-permissions-for-a-github-app)
 - [Using webhooks with GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/using-webhooks-with-github-apps)
 
-## Deploy on Deno Deploy
+## Deploy on Vercel
 
 1. Fork this repository to your GitHub account
-2. Go to [Deno Deploy - New App](https://console.deno.com/new)
-3. Click `Sign in with GitHub`, authorize Deno Deploy, accept terms
-4. If your account does not appear in the `Select user or organization` dropdown, click `Add GitHub Account` and authorize it
-5. Select your account and select the forked repository
-6. Click `Add Environment variables` and click `Add variable` to add the following environment variables:
+2. Sign up on [Vercel](https://vercel.com/signup) using `Continue with GitHub`
+3. Click `Add New` (top right) and select `Project`
+4. Click `Continue with GitHub`, choose `Only select repositories` in the popup window and select the repo you want to deploy
+5. Click `Import` next to the forked repository `dependabot-alert-bridge`
+6. Add the following variables in `Environment Variables`:
    - `GITHUB_APP_ID`: value that you copied during GitHub App setup
    - `GITHUB_APP_PRIVATE_KEY`: generate single line value with `\n` escapes with command below
      ```bash
      cat path/to/private-key.pem | tr -d '\r' | perl -pe 's/\n/\\n/g' | pbcopy
      ```
    - `GITHUB_WEBHOOK_SECRET`: value that you copied during GitHub App setup
-   - optional: `PORT`
-7. Click `Create App`
-8. Copy the Production URL (ends in `.deno.net`) at the top right of the page and set GitHub App Webhook URL to:
-   - `https://<your-project>.deno.net/webhook`
+7. Click `Deploy`
+8. Click `Continue to Project` (bottom), the `Deployments` tab (left) and check that the first deploy in the list contains your last commit message on GitHub
+9. Click the `Domains` tab (left), copy the domain ending in `.vercel.app` and set GitHub App Webhook URL to:
+   - `https://<your-project>.vercel.app/webhook`
+10. Open `https://<your-project>.vercel.app/health` in your browser and confirm the response is `{"status":"ok"}`
 
 ## Test
 
@@ -120,7 +121,7 @@ Requirements:
 
 ```bash
 pnpm install
-node --env-file=.env index.ts
+node --env-file=.env server.ts
 ```
 
 Expose local webhook endpoint:
@@ -135,7 +136,7 @@ Then set the GitHub App Webhook URL to:
 https://<your-cloudflared-subdomain>/webhook
 ```
 
-After local testing, remember to set GitHub App Webhook URL back to your Deno Deploy `/webhook` URL.
+After local testing, remember to set GitHub App Webhook URL back to your Vercel `/webhook` URL.
 
 Checks:
 
